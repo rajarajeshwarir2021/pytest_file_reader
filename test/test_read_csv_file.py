@@ -9,6 +9,10 @@ from unittest.mock import MagicMock
 
 @pytest.fixture()
 def mock_read_csv(monkeypatch):
+    """
+    Fixture to mock pandas.read_csv for testing.
+    It creates a mock DataFrame to simulate a CSV read.
+    """
     # Create a mock DataFrame to return
     mock_df = pd.DataFrame({
         "Name": ["Alice", "Bob"],
@@ -25,6 +29,9 @@ def mock_read_csv(monkeypatch):
 
 
 def test_read_csv_file_return_correct_dataframe(mock_read_csv, monkeypatch):
+    """
+    Test the behavior when the file exists and the DataFrame is read correctly.
+    """
     # Mock os.path.exists to return False (simulating the file doesn't exist)
     mock_exists = MagicMock(return_value=True)
     monkeypatch.setattr(os.path, "exists", mock_exists)
@@ -40,6 +47,10 @@ def test_read_csv_file_return_correct_dataframe(mock_read_csv, monkeypatch):
 
 
 def test_read_csv_file_throw_exception_file_not_exist(monkeypatch):
+    """
+    Test the behavior when the file does not exist.
+    It should raise an exception.
+    """
     # Mock os.path.exists to return False (simulating the file doesn't exist)
     mock_exists = MagicMock(return_value=False)
     monkeypatch.setattr(os.path, "exists", mock_exists)
